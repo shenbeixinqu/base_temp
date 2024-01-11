@@ -1,5 +1,8 @@
 import Vue from "vue";
 
+// 加载全局样式
+import "./styles/uni.scss"
+
 // 加载插件
 const Plugins = require.context('./plugins', false, /\.js$/);
 Plugins.keys().map(Plugins)
