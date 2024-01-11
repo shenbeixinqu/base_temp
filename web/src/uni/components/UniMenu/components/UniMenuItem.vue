@@ -22,7 +22,7 @@
 <script>
 import { routerMode } from "@/config";
 import { isExternal } from "@/utils/validate";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "UniMenuItem",
@@ -32,6 +32,27 @@ export default {
       default() {
         return null;
       },
+    },
+  },
+  methods: {
+    ...mapActions({
+      foldSideBar: "settings/foldSideBar",
+    }),
+    handleLink() {
+      const routePath = this.itemOrMenu.path;
+      const target = this.itemOrMenu.meta.target;
+      if (target === "_blank") {
+        if (isExternal(routePath)) window.open(routePath);
+        else if (this.$route.fullPath !== routePath)
+          routerMode === "hash"
+            ? window.open("/#" + routePath)
+            : window.open(routePath);
+      } else {
+        if (isExternal(routePath)) window.location.href = routePath;
+        else if (this.$route.fullPath !== routePath) {
+          this.$router.push(this.itemOrMenu.path);
+        }
+      }
     },
   },
 };
