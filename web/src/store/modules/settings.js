@@ -34,6 +34,9 @@ const getters = {
 }
 
 const mutations = {
+  openSideBar(state) {
+    state.collapse = false;
+  },
   foldSideBar(state) {
     state.collapse = true
   }
