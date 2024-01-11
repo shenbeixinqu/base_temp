@@ -1,7 +1,12 @@
 <template>
   <div class="layout-vertical" :class="{ fixed: fixedHeader }">
     <uni-side-bar />
-    <div v-if="!collapse" @click="handleFoldSideBar"></div>
+    <div class="uni-main" :class="{ 'is-collapse-main': collapse }">
+      <div class="uni-layout-header" :class="{ 'fixed-header': fixedHeader }">
+        <uni-nav />
+        <uni-tabs v-show="showTabs" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -9,7 +14,7 @@
 import { mapActions } from "vuex";
 
 export default {
-  name: "LayoutVertical",
+  name: "UniLayoutVertical",
   props: {
     collapse: {
       type: Boolean,
@@ -38,6 +43,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.uni-layout-vertical {
+  .fixed-header {
+    left: $base-left-menu-width;
+    width: $base-right-content-width;
+  }
+}
 </style>

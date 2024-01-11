@@ -49,13 +49,71 @@ export default {
     align-items: center;
     justify-items: center;
     height: $base-nav-height;
+
+    ::v-deep {
+      .uni-breadcrumb {
+        margin-left: $base-margin;
+      }
+
+      .el-tabs {
+        width: 100%;
+        margin-left: $base-margin;
+
+        .el-tabs__header {
+          margin: 0;
+
+          > .el-tabs__nav-wrap {
+            display: flex;
+            align-items: center;
+
+            .el-icon-arrow-left,
+            .el-icon-arrow-right {
+              font-weight: 600;
+              color: $base-color-grey;
+            }
+          }
+        }
+
+        .el-tabs__item {
+          > div {
+            display: flex;
+            align-items: center;
+
+            i {
+              margin-right: 3px;
+            }
+          }
+        }
+      }
+
+      .el-tabs__nav-wrap::after {
+        display: none;
+      }
+    }
   }
+
   .right-panel {
     display: flex;
     align-content: center;
     align-items: center;
     justify-content: flex-end;
     height: $base-nav-height;
+
+    ::v-deep {
+      [class*="ri-"] {
+        margin-left: $base-margin;
+        color: $base-color-grey;
+        cursor: pointer;
+      }
+
+      button {
+        [class*="ri-"] {
+          margin-left: 0;
+          color: $base-color-white;
+          cursor: pointer;
+        }
+      }
+    }
   }
 }
 </style>

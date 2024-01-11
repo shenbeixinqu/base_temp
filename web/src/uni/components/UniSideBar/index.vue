@@ -12,7 +12,7 @@
       :text-color="variables['menu-color']"
       :unique-opened="uniqueOpened"
     >
-      <template v-for="(item, index) in handleRoutes">
+      <template v-for="(route, index) in handleRoutes">
         <uni-menu
           v-if="route.meta && !route.meta.hidden"
           :key="index + route.name"
@@ -51,12 +51,19 @@ export default {
       routes: "routes/routes",
     }),
     handleRoutes() {
-      return this.routes.flatMap((route) => {
-        console.log("route", route);
-        route.meta && route.meta.levelHidden === true && route.children
-          ? route.children
-          : route;
-      });
+      return this.layout === "comprehensive"
+        ? this.handlePartialRoutes
+        : this.routes.flatMap((route) =>
+            route.meta && route.meta.levelHidden === true && route.children
+              ? route.children
+              : route
+          );
+    },
+    handlePartialRoutes() {
+      const activeMenu = this.routes.find(
+        (route) => route.name === this.extra.first
+      );
+      return activeMenu ? activeMenu.children : [];
     },
   },
   watch: {
