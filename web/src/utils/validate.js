@@ -21,3 +21,14 @@ export function isJson(value) {
   return false
 }
 
+/**
+ * @description 判断是否为数组
+ * @param arg
+ */
+
+export function isArray(arg) {
+  if (typeof Array.isArray === "undefined") {
+    return Object.prototype.toString.call(arg) === "[object Array]";
+  }
+  return Array.isArray(arg);
+}
