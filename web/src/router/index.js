@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Layout from "@/uni/layouts"
-import { routerMode } from "@/config";
+import { publicPath,routerMode } from "@/config";
 Vue.use(VueRouter);
 
 export const constantRoutes = [
@@ -74,7 +74,8 @@ export function resetRouter(routes = constantRoutes) {
 
 function createRouter(routes = asyncRoutes) {
   return new VueRouter({
-    base: process.env.BASE_URL,
+    // base: process.env.BASE_URL,
+    base: publicPath,
     mode: routerMode,
     scrollBehavior: () => ({
       y: 0,
