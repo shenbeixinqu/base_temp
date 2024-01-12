@@ -7,4 +7,6 @@ module.exports = {
   uniqueOpened: false,
   // 布局时默认展开的菜单
   defaultOpeneds: [],
+  // 缓存路由的最大数量
+  keepAliveMaxNum: 20,
 }

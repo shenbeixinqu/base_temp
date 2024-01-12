@@ -9,6 +9,8 @@ module.exports = {
   fixedHeader: true,
   // 是否开启标签页
   showTabs: true,
+  // 显示标签页时标签页样式：卡片风格card、灵动风格smart、圆滑风格smooth
+  tabsBarStyle: "smart",
   // 折叠
   collapse: false
 }
