@@ -39,12 +39,19 @@ const mutations = {
   },
   foldSideBar(state) {
     state.collapse = true
+  },
+  toggleCollapse(state) {
+    state.collapse = !state.collapse;
+    localStorage.setItem("collapse", `{"collapse": ${state.collapse}}`)
   }
 }
 
 const actions = {
   foldSideBar({ commit }) {
     commit('foldSideBar')
+  },
+  toggleCollapse({ commit }) {
+    commit("toggleCollapse")
   }
 }
 
