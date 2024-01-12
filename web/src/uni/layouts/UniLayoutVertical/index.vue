@@ -1,11 +1,12 @@
 <template>
-  <div class="layout-vertical" :class="{ fixed: fixedHeader }">
+  <div class="uni-layout-vertical" :class="{ fixed: fixedHeader, 'no-tabs-bar': !showTabs, }">
     <uni-side-bar />
     <div class="uni-main" :class="{ 'is-collapse-main': collapse }">
       <div class="uni-layout-header" :class="{ 'fixed-header': fixedHeader }">
         <uni-nav />
         <uni-tabs v-show="showTabs" />
       </div>
+      <uni-app-main />
     </div>
   </div>
 </template>
