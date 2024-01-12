@@ -100,7 +100,7 @@ const handleData = async ({ config, data, status, statusText}) => {
  */
 
 const instance = axios.create({
-  baseURL,
+  baseURL: baseURL,
   // baseURL: "http://10.1.1.181:6789",
   timeout: requestTimeout,
   headers: {

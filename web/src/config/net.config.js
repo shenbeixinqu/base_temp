@@ -3,7 +3,7 @@
  */
 
 module.exports = {
-  // baseURL: "http://10.1.1.181:5002/",
+  // baseURL: "http://10.1.1.181:5002",
   baseURL: "http://10.1.1.181:6789",
   contentType: "application/json;charset=UTF-8",
   requestTimeout: 10000,

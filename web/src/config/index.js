@@ -1,7 +1,12 @@
+const cli = require("./cli.config")
+const setting = require('./setting.config')
+const net = require("./net.config")
 const theme = require('./theme.config')
-const config = require('./setting.config')
+
 
 module.exports = {
-  ...config,
+  ...cli,
+  ...setting,
+  ...net,
   ...theme
 }
