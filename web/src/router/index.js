@@ -2,8 +2,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Layout from "@/uni/layouts"
 import { routerMode } from "@/config";
-import Home from "../views/Home.vue";
-
 Vue.use(VueRouter);
 
 export const constantRoutes = [
@@ -19,12 +17,23 @@ export const constantRoutes = [
 
 export const asyncRoutes = [
   {
-    path: "/home",
-    name: "Home",
-    component: Home,
+    path: "/",
+    name: "Root",
+    component: Layout,
+    redirect: "/index",
     meta: {
       title: "首页"
-    }
+    },
+    children: [
+      {
+        path: "index",
+        name: "Index",
+        component: () => import("@/views/index"),
+        meta: {
+          title: "首页"
+        }
+      }
+    ]
   },
   {
     path: "/admin",
