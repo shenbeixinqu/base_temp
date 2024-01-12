@@ -40,5 +40,29 @@ export default {
     height: $base-nav-height;
     font-size: $base-font-size-default;
     line-height: $base-nav-height;
+
+    ::v-deep {
+    .el-breadcrumb__item {
+      .el-breadcrumb__inner {
+        a {
+          font-weight: normal;
+          color: #515a6e;
+        }
+      }
+
+      .is-link {
+        font-weight: normal;
+        color: #515a6e;
+      }
+
+      &:last-child {
+        .el-breadcrumb__inner {
+          a {
+            color: #999;
+          }
+        }
+      }
+    }
+  }
   }
 </style>

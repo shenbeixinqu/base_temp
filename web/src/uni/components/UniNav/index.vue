@@ -4,7 +4,7 @@
       <el-col :lg="12" :md="12" :sm="12" :xl="12" :xs="4">
         <div class="left-panel">
           <uni-fold />
-          <uni-breadcrumb />
+          <uni-breadcrumb class="hidden-xs-only" />
         </div>
       </el-col>
       <el-col :lg="12" :md="12" :sm="12" :xl="12" :xs="20">

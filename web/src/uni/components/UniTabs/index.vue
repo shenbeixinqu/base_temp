@@ -2,10 +2,7 @@
   <div class="uni-tabs">
     <el-tabs
       v-model="tabActive"
-      class="uni-tabs-content"
-      :class="{
-        ['uni-tabs-content-' + theme.tabsBarStyle]: true,
-      }"
+      class="uni-tabs-content uni-tabs-content-smart"
       type="card"
       @tab-click="handleTabClick"
       @tab-remove="handleTabRemove"

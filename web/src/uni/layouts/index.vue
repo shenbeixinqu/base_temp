@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="vue-wrapper">
     <component
       :is="'uni-layout-' + theme.layout"
       :collapse="collapse"
@@ -92,34 +92,5 @@ export default {
       }
     }
   }
-
-  /* 手机端开始 */
-  &.mobile {
-    ::v-deep {
-      .uni-layout-vertical {
-        .el-scrollbar.uni-side-bar.is-collapse {
-          width: 0;
-        }
-
-        .uni-main {
-          .fixed-header {
-            left: 0;
-            width: 100%;
-          }
-
-          width: 100%;
-          margin-left: 0;
-        }
-      }
-
-      /* 隐藏分页和页码跳转 */
-      .el-pager,
-      .el-pagination__jump {
-        display: none;
-      }
-    }
-  }
-
-  /* 手机端结束 */
 }
 </style>
