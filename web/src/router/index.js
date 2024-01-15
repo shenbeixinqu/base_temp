@@ -46,7 +46,7 @@ export const asyncRoutes = [
       {
         path: "thing",
         name: "Thing",
-        component: () => import("@/views/admin/thing.vue"),
+        component: () => import("@/views/admin/thing"),
         meta: {
           title: "房屋管理",
         },
