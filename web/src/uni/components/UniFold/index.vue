@@ -11,16 +11,15 @@ export default {
   },
   computed: {
     ...mapGetters({
-      collapse: "settings/collapse"
-    })
+      collapse: "settings/collapse",
+    }),
   },
   methods: {
     ...mapActions({
-      toggleCollapse: "settings/toggleCollapse"
-    })
+      toggleCollapse: "settings/toggleCollapse",
+    }),
   },
-}
+};
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

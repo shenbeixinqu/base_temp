@@ -1,5 +1,9 @@
 <template>
-  <component :is="menuComponent" :item-or-menu="item" v-if="item.meta && !item.meta.hidden">
+  <component
+    :is="menuComponent"
+    :item-or-menu="item"
+    v-if="item.meta && !item.meta.hidden"
+  >
     <template v-if="item.children && item.children.length">
       <uni-menu
         v-for="route in item.children"
@@ -23,7 +27,7 @@ export default {
     layout: {
       type: String,
       default: "",
-    }
+    },
   },
   data() {
     return {
@@ -36,13 +40,13 @@ export default {
     }),
   },
   created() {
-    if(
+    if (
       this.item.children &&
       this.item.children.some((route) => {
         return route.meta && route.meta.hidden !== true;
       })
     )
-      this.menuComponent = "UniSubmenu"
-  }
+      this.menuComponent = "UniSubmenu";
+  },
 };
 </script>

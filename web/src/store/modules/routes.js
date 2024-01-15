@@ -3,22 +3,22 @@ import { filterRoutes } from "@/utils/routes";
 import { rolesControl } from "@/config";
 
 const state = () => ({
-  routes: []
-})
+  routes: [],
+});
 
 const getters = {
-  routes: (state) =>  state.routes
-}
+  routes: (state) => state.routes,
+};
 
 const mutations = {
   setRoutes(state, routes) {
-    state.routes = routes
-  }
-}
+    state.routes = routes;
+  },
+};
 
 const actions = {
   async setRoutes({ commit }, mode = "none") {
-    let routes = [...asyncRoutes]
+    let routes = [...asyncRoutes];
     // 设置游客路由关闭路由拦截
     const control = mode === "visit" ? false : rolesControl;
     // 根据权限和rolesControl过滤路由
@@ -27,7 +27,7 @@ const actions = {
     commit("setRoutes", JSON.parse(JSON.stringify(accessRoutes)));
     // 根据可访问路由重置Vue Router
     await resetRouter(accessRoutes);
-  }
-}
+  },
+};
 
-export default { state, getters, mutations, actions }
+export default { state, getters, mutations, actions };

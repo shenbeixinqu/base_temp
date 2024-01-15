@@ -18,18 +18,18 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      description: "最新更新"
-    }
+      description: "最新更新",
+    };
   },
   computed: {
     ...mapGetters({
       avatar: "user/avatar",
-      username: "user/username"
+      username: "user/username",
     }),
   },
   methods: {
     handleTips() {
-      const hour = new Date().getHours()
+      const hour = new Date().getHours();
       return hour < 8
         ? `早上好 ${this.username}, 又是元气满满的一天。`
         : hour <= 11
@@ -39,9 +39,9 @@ export default {
         : hour < 18
         ? `下午好 ${this.username}，你一定有些累了，喝杯咖啡提提神。`
         : `晚上好 ${this.username}，愿你天黑有灯，下雨有伞。`;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

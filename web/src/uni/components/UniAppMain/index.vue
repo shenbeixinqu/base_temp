@@ -9,10 +9,8 @@
 
 <script>
 export default {
-  name: "UniAppMain"
-}
+  name: "UniAppMain",
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

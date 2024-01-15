@@ -2,7 +2,7 @@
  * @description tabsBar标签页逻辑
  */
 
- const state = () => ({
+const state = () => ({
   visitedRoutes: [],
 });
 const getters = {

@@ -1,9 +1,9 @@
-import request from "@/utils/request"
+import request from "@/utils/request";
 
 export function getList(data) {
   return request({
-    url: "/table/getList",
+    url: "/back/thing_manage",
     method: "get",
-    data
-  })
+    data,
+  });
 }

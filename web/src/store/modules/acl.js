@@ -17,7 +17,7 @@ const mutations = {
   setRole(state, role) {
     state.role = role;
   },
-  
+
   setAbility(state, ability) {
     state.ability = ability;
   },

@@ -1,5 +1,5 @@
-import { storage, tokenTableName} from "@/config"
-import cookie from 'js-cookie';
+import { storage, tokenTableName } from "@/config";
+import cookie from "js-cookie";
 
 /**
  * @description 获取token
@@ -8,16 +8,16 @@ import cookie from 'js-cookie';
 export function getToken() {
   if (storage) {
     if ("localStorage" === storage) {
-      return localStorage.getItem(tokenTableName)
+      return localStorage.getItem(tokenTableName);
     } else if ("sessionStorage" === storage) {
-      return sessionStorage.getItem(tokenTableName)
+      return sessionStorage.getItem(tokenTableName);
     } else if ("cookie" === storage) {
-      return cookie.get(tokenTableName)
+      return cookie.get(tokenTableName);
     } else {
-      return localStorage.getItem(tokenTableName)  
+      return localStorage.getItem(tokenTableName);
     }
   } else {
-    return localStorage.getItem(tokenTableName)
+    return localStorage.getItem(tokenTableName);
   }
 }
 
@@ -28,16 +28,16 @@ export function getToken() {
 export function setToken(token) {
   if (storage) {
     if ("localStorage" === storage) {
-      return localStorage.setItem(tokenTableName, token)
+      return localStorage.setItem(tokenTableName, token);
     } else if ("sessionStorage" === storage) {
-      return sessionStorage.setItem(tokenTableName, token)
+      return sessionStorage.setItem(tokenTableName, token);
     } else if ("cookie" === storage) {
-      return cookie.set(tokenTableName, token)
+      return cookie.set(tokenTableName, token);
     } else {
-      return localStorage.setItem(tokenTableName, token)
+      return localStorage.setItem(tokenTableName, token);
     }
   } else {
-    return localStorage.setItem(tokenTableName, token)
+    return localStorage.setItem(tokenTableName, token);
   }
 }
 
@@ -48,15 +48,15 @@ export function setToken(token) {
 export function removeToken() {
   if (storage) {
     if ("localStorage" === storage) {
-      return localStorage.removeItem(tokenTableName)
+      return localStorage.removeItem(tokenTableName);
     } else if ("sessionStorage" === storage) {
-      return sessionStorage.removeItem(tokenTableName)
+      return sessionStorage.removeItem(tokenTableName);
     } else if ("cookie" === storage) {
-      return cookie.remove(tokenTableName)
+      return cookie.remove(tokenTableName);
     } else {
-      return localStorage.removeItem(tokenTableName)
+      return localStorage.removeItem(tokenTableName);
     }
   } else {
-    return localStorage.removeItem(tokenTableName)
+    return localStorage.removeItem(tokenTableName);
   }
 }

@@ -1,5 +1,8 @@
 <template>
-  <div class="uni-layout-vertical" :class="{ fixed: fixedHeader, 'no-tabs-bar': !showTabs, }">
+  <div
+    class="uni-layout-vertical"
+    :class="{ fixed: fixedHeader, 'no-tabs-bar': !showTabs }"
+  >
     <uni-side-bar />
     <div class="uni-main" :class="{ 'is-collapse-main': collapse }">
       <div class="uni-layout-header" :class="{ 'fixed-header': fixedHeader }">
@@ -32,16 +35,16 @@ export default {
     showTabs: {
       type: Boolean,
       default() {
-        return true
-      }
-    }
+        return true;
+      },
+    },
   },
   methods: {
     ...mapActions({
-      handleFoldSideBar: "settings/foldSideBar"
-    })
-  }
-}
+      handleFoldSideBar: "settings/foldSideBar",
+    }),
+  },
+};
 </script>
 
 <style lang="scss" scoped>

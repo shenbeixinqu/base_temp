@@ -8,9 +8,7 @@
         </div>
       </el-col>
       <el-col :lg="12" :md="12" :sm="12" :xl="12" :xs="20">
-        <div class="right-panel">
-          56789
-        </div>
+        <div class="right-panel">56789</div>
       </el-col>
     </el-row>
   </div>
@@ -23,14 +21,12 @@ export default {
     layout: {
       type: String,
       default: "",
-    }
+    },
   },
   data() {
-    return {
-
-    }
-  }
-}
+    return {};
+  },
+};
 </script>
 
 <style lang="scss" scoped>

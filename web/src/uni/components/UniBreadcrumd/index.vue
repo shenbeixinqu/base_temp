@@ -30,18 +30,18 @@ export default {
             ? [route, ...this.getBreadcrumbList(route.children)]
             : [route]
         );
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-  .uni-breadcrumb {
-    height: $base-nav-height;
-    font-size: $base-font-size-default;
-    line-height: $base-nav-height;
+.uni-breadcrumb {
+  height: $base-nav-height;
+  font-size: $base-font-size-default;
+  line-height: $base-nav-height;
 
-    ::v-deep {
+  ::v-deep {
     .el-breadcrumb__item {
       .el-breadcrumb__inner {
         a {
@@ -64,5 +64,5 @@ export default {
       }
     }
   }
-  }
+}
 </style>

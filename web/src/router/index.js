@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Layout from "@/uni/layouts"
-import { publicPath,routerMode } from "@/config";
+import Layout from "@/uni/layouts";
+import { publicPath, routerMode } from "@/config";
 Vue.use(VueRouter);
 
 export const constantRoutes = [
@@ -13,7 +13,7 @@ export const constantRoutes = [
       hidden: true,
     },
   },
-]
+];
 
 export const asyncRoutes = [
   {
@@ -22,7 +22,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: "/index",
     meta: {
-      title: "首页"
+      title: "首页",
     },
     children: [
       {
@@ -30,17 +30,17 @@ export const asyncRoutes = [
         name: "Index",
         component: () => import("@/views/index"),
         meta: {
-          title: "首页"
-        }
-      }
-    ]
+          title: "首页",
+        },
+      },
+    ],
   },
   {
     path: "/admin",
     name: "admin",
     component: Layout,
     meta: {
-      title: "房屋管理"
+      title: "房屋管理",
     },
     children: [
       {
@@ -48,12 +48,12 @@ export const asyncRoutes = [
         name: "Thing",
         component: () => import("@/views/admin/thing.vue"),
         meta: {
-          title: "房屋管理"
-        }
-      }
-    ]
-  }
-]
+          title: "房屋管理",
+        },
+      },
+    ],
+  },
+];
 
 const router = createRouter();
 
@@ -81,7 +81,7 @@ function createRouter(routes = asyncRoutes) {
       y: 0,
     }),
     routes: routes,
-  })
+  });
 }
 
 // const router = new VueRouter({

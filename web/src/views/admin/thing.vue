@@ -1,17 +1,15 @@
 <template>
   <div class="thing-container">
-    <el-table :border="border" :data="list">
-      
-    </el-table>
+    <el-table :border="border" :data="list"> </el-table>
   </div>
 </template>
 
 <script>
-import { getList } from "@/api/thing"
+import { getList } from "@/api/thing";
 export default {
   name: "Thing",
   created() {
-    this.fetchData()
+    this.fetchData();
   },
   data() {
     return {
@@ -23,15 +21,13 @@ export default {
   methods: {
     async fetchData() {
       const {
-        data: {total, list }
-      } = await getList()
+        data: { total, list },
+      } = await getList();
       this.total = total;
-      this.list = list
-    }
-  }
-}
+      this.list = list;
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

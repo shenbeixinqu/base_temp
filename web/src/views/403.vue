@@ -1,11 +1,9 @@
 <template>
-  <span>12345678</span>
+  <span>403</span>
 </template>
 
 <script>
-export default {
-  name: "Home",
-};
+export default {};
 </script>
 
 <style></style>

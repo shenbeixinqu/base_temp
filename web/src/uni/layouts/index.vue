@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex"
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Layouts",
@@ -22,11 +22,11 @@ export default {
   computed: {
     ...mapGetters({
       collapse: "settings/collapse",
-      theme: "settings/theme"
-    })
+      theme: "settings/theme",
+    }),
   },
   beforeMount() {
-    this.oldLayout = this.theme.layout
+    this.oldLayout = this.theme.layout;
     this.handleLayouts();
   },
   methods: {
@@ -37,8 +37,8 @@ export default {
     }),
     handleLayouts() {
       this.setRoutes();
-    }
-  }
+    },
+  },
 };
 </script>
 

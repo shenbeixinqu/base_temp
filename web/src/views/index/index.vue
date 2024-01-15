@@ -7,13 +7,13 @@
 </template>
 
 <script>
-import PageHeader from "./components/PageHeader.vue"
+import PageHeader from "./components/PageHeader.vue";
 export default {
   name: "Index",
   components: {
-    PageHeader
-  }
-}
+    PageHeader,
+  },
+};
 </script>
 
 <style lang="scss" scoped>
