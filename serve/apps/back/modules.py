@@ -8,6 +8,10 @@ class CMSHouse(db.Model):
     name = db.Column(db.String(100))
     # 月租价格
     price = db.Column(db.Integer)
+    # 押金
+    deposit = db.Column(db.Integer)
+    # 小区
+    community = db.Column(db.String(200))
     # 地址
     address = db.Column(db.String(100))
     # 租赁方式
@@ -20,5 +24,7 @@ class CMSHouse(db.Model):
     area = db.Column(db.Float)
     # 简介
     desc = db.Column(db.String(200))
+    # 联系电话
+    mobile = db.Column(db.String(100))
     # 状态
     status = db.Column(db.Integer, default=0)  # 0 上架 1 下架
