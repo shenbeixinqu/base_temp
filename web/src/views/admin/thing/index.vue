@@ -2,10 +2,20 @@
   <div class="thing-container">
     <uni-query-form>
       <uni-query-form-left-panel>
-        <el-button size="small" type="primary" @click="handleEdit()"
+        <el-button
+          icon="el-icon-plus"
+          size="small"
+          type="primary"
+          @click="handleEdit()"
           >添加</el-button
         >
-        <el-button size="small" type="danger">批量删除</el-button>
+        <el-button
+          icon="el-icon-delete"
+          size="small"
+          type="danger"
+          @click="handleDel"
+          >批量删除</el-button
+        >
       </uni-query-form-left-panel>
       <uni-query-form-right-panel :model="queryForm">
         <el-form :inline="true">
@@ -18,21 +28,29 @@
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="small" @click="queryData"
+            <el-button
+              type="primary"
+              icon="el-icon-search"
+              size="small"
+              @click="queryData"
               >查询</el-button
             >
           </el-form-item>
         </el-form>
       </uni-query-form-right-panel>
     </uni-query-form>
-    <el-table :data="list">
+    <el-table
+      :loading="listLoading"
+      :data="list"
+      @selection-change="setSelectRows"
+    >
       <el-table-column type="selection" width="55" />
       <el-table-column label="序号" width="80">
         <template #default="{ $index }">
           {{ $index + 1 }}
         </template>
       </el-table-column>
-      <el-table-column label="名称" prop="name" width="220px" />
+      <el-table-column label="名称" prop="name" width="220" />
       <el-table-column label="月租价格" prop="price" />
       <el-table-column
         label="地址"
@@ -69,7 +87,7 @@
       <el-table-column align="center" label="操作" width="150px">
         <template #default="{ row }">
           <el-button type="text" @click="handleEdit(row)">编辑</el-button>
-          <el-button type="text">删除</el-button>
+          <el-button type="text" @click="handleDel(row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -87,7 +105,7 @@
 </template>
 
 <script>
-import { getList } from "@/api/thing";
+import { getList, getDel } from "@/api/thing";
 import Edit from "./components/Edit.vue";
 
 export default {
@@ -101,7 +119,9 @@ export default {
   data() {
     return {
       list: [],
+      listLoading: true,
       total: 0,
+      selectRows: "",
       layout: "total, sizes, prev, pager, next, jumper",
       queryForm: {
         pn: 1,
@@ -112,11 +132,17 @@ export default {
   },
   methods: {
     async fetchData() {
+      this.listLoading = true;
       const {
         data: { total, data },
-      } = await getList();
+      } = await getList(this.queryForm);
       this.total = total;
       this.list = data;
+      this.listLoading = false;
+    },
+    setSelectRows(val) {
+      this.selectRows = val;
+      console.log(this.selectRows);
     },
     queryData() {
       this.queryForm.pn = 1;
@@ -136,6 +162,67 @@ export default {
         this.$refs.edit.showEdit(row);
       } else {
         this.$refs.edit.showEdit();
+      }
+    },
+    // 删除
+    handleDel(row) {
+      if (row.id) {
+        this.$confirm("确定要删除当前项吗?", "温馨提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        })
+          .then(() => {
+            getDel({ ids: [row.id] }).then((res) => {
+              if (res.data.status === 200) {
+                this.$message({
+                  type: "success",
+                  message: "操作成功",
+                });
+                this.fetchData();
+              }
+            });
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消删除",
+            });
+          });
+      } else {
+        if (this.selectRows.length > 0) {
+          this.$confirm("确定要删除选中行吗", "温馨提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning",
+          })
+            .then(() => {
+              let ids = [];
+              this.selectRows.forEach((item) => {
+                ids.push(item.id);
+              }),
+                getDel({ ids: ids }).then((res) => {
+                  if (res.data.status === 200) {
+                    this.$message({
+                      type: "success",
+                      message: "删除成功",
+                    });
+                    this.fetchData();
+                  }
+                });
+            })
+            .catch(() => {
+              this.$message({
+                type: "info",
+                message: "已取消删除",
+              });
+            });
+        } else {
+          this.$message({
+            type: "error",
+            message: "未选中任何行",
+          });
+        }
       }
     },
   },

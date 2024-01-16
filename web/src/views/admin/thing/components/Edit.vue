@@ -13,7 +13,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="租赁方式">
+          <el-form-item label="租赁方式" prop="way">
             <el-select v-model="form.way" style="width: 100%">
               <el-option label="月租" value="1" />
               <el-option label="年租" value="2" />
@@ -41,7 +41,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="地址">
+          <el-form-item label="地址" prop="address">
             <el-input v-model="form.address" />
           </el-form-item>
         </el-col>
@@ -51,7 +51,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="朝向">
+          <el-form-item label="朝向" prop="towards">
             <el-select v-model="form.towards" style="width: 100%">
               <el-option label="东西" value="1" />
               <el-option label="南北" value="2" />
@@ -59,7 +59,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="楼层">
+          <el-form-item label="楼层" prop="floor">
             <el-input-number
               v-model="form.floor"
               :min="0"
@@ -69,7 +69,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="面积">
+          <el-form-item label="面积" prop="area">
             <el-input v-model="form.area" />
           </el-form-item>
         </el-col>
@@ -115,10 +115,45 @@ export default {
             trigger: "blur",
           },
         ],
+        way: [
+          {
+            required: true,
+            message: "租赁方式不能为空",
+            trigger: "blur",
+          },
+        ],
+        address: [
+          {
+            required: true,
+            message: "地址不能为空",
+            trigger: "blur",
+          },
+        ],
         price: [
           {
             required: true,
             message: "月租价格不能为空",
+            trigger: "blur",
+          },
+        ],
+        towards: [
+          {
+            required: true,
+            message: "朝向不能为空",
+            trigger: "blur",
+          },
+        ],
+        floor: [
+          {
+            required: true,
+            message: "楼层不能为空",
+            trigger: "blur",
+          },
+        ],
+        area: [
+          {
+            required: true,
+            message: "面积价格不能为空",
             trigger: "blur",
           },
         ],
@@ -144,9 +179,11 @@ export default {
       console.log("row", row);
       if (!row) {
         this.title = "添加";
+        this.form.id = "";
       } else {
         this.title = "编辑";
         this.form = Object.assign({}, row);
+        console.log("row", row);
       }
       this.dialogFormVisible = true;
     },
@@ -161,6 +198,19 @@ export default {
       console.log(this.form);
       getEdit(this.form).then((res) => {
         console.log("res", res);
+        if (res.data.status === 200) {
+          this.$message({
+            type: "success",
+            message: `${this.title}成功`,
+          });
+          this.$emit("fetch-data");
+          this.close();
+        } else {
+          this.$message({
+            type: "error",
+            message: res.data.msg,
+          });
+        }
       });
     },
   },
