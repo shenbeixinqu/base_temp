@@ -1,0 +1,30 @@
+{
+  "id": "4412354",
+  "name": "thing",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "5975445",
+      "name": "城市",
+      "font_class": "chengshi",
+      "unicode": "ec70",
+      "unicode_decimal": 60528
+    },
+    {
+      "icon_id": "33138046",
+      "name": "折叠-展开",
+      "font_class": "zhedie-zhankai",
+      "unicode": "e717",
+      "unicode_decimal": 59159
+    },
+    {
+      "icon_id": "33138048",
+      "name": "折叠-收起",
+      "font_class": "zhedie-shouqi",
+      "unicode": "e718",
+      "unicode_decimal": 59160
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 4412354 */
+  src: url('iconfont.eot?t=1705373667191'); /* IE9 */
+  src: url('iconfont.eot?t=1705373667191#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('iconfont.woff2?t=1705373667191') format('woff2'),
+       url('iconfont.woff?t=1705373667191') format('woff'),
+       url('iconfont.ttf?t=1705373667191') format('truetype'),
+       url('iconfont.svg?t=1705373667191#iconfont') format('svg');
+}
+
+.iconfont{
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-chengshi:before {
+  content: "\ec70";
+}
+
+.icon-zhedie-zhankai:before {
+  content: "\e717";
+}
+
+.icon-zhedie-shouqi:before {
+  content: "\e718";
+}
+

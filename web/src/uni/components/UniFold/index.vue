@@ -1,5 +1,10 @@
 <template>
-  <span @click="toggleCollapse">关闭</span>
+  <span
+    :class="
+      collapse ? 'iconfont icon-zhedie-zhankai' : 'iconfont icon-zhedie-shouqi'
+    "
+    @click="toggleCollapse"
+  ></span>
 </template>
 
 <script>
