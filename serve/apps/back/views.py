@@ -28,7 +28,7 @@ def login():
 
 
 # 退出
-@bp.route('/logout')
+@bp.route('/logout', methods=['POST'])
 def logout():
     data = {
         "code": 200,
