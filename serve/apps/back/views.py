@@ -1,10 +1,63 @@
 import json
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from .modules import CMSHouse
 from utils.return_methods import success_return, error_return
 from exts import db
+from auth import generate_auth_token
+
 
 bp = Blueprint('back', __name__, url_prefix='/back')
+
+
+# 登录
+@bp.route('/login', methods=['POST'])
+def login():
+    username = request.values.get('username')
+    password = request.args.get('password')
+    token_byte = generate_auth_token(username)
+    token_str = token_byte.decode('utf-8')
+    print('token_str', token_str)
+    data = {
+        "code": 200,
+        "msg": "success",
+        "data": {
+            "token": token_str
+        }
+    }
+    return jsonify(data)
+
+
+# 退出
+@bp.route('/logout')
+def logout():
+    data = {
+        "code": 200,
+        "msg": "success",
+    }
+    return jsonify(data)
+
+
+# 获取用户信息
+@bp.route("/userInfo")
+def user_info():
+    token_name = request.args.get("token_value")
+    data = {"code": 200, "msg": "success"}
+
+    if token_name == "editor-token":
+        data["data"] = {
+            "roles": ["editor"],
+            "ability": ["READ", "WRITE"],
+            "username": "editor",
+            "avatar": "https://i.gtimg.cn/club/item/face/img/2/16022_100.gif"
+        }
+    else:
+        data["data"] = {
+            "roles": ["admin"],
+            "ability": ["READ", "WRITE", "DELETE"],
+            "username": "admin",
+            "avatar": "https://i.gtimg.cn/club/item/face/img/2/16022_100.gif"
+        }
+    return jsonify(data)
 
 
 @bp.route('/thing_manage')
