@@ -32,3 +32,13 @@ export function isArray(arg) {
   }
   return Array.isArray(arg);
 }
+
+/**
+ * @description 检查密码是否小于6位
+ * @param value
+ * @return { boolean }
+ */
+
+export function isPassword(value) {
+  return value.length >= 6;
+}

@@ -17,6 +17,13 @@ export const constantRoutes = [
 
 export const asyncRoutes = [
   {
+    path: "/login",
+    component: () => import("@/views/login"),
+    meta: {
+      hidden: true,
+    },
+  },
+  {
     path: "/",
     name: "Root",
     component: Layout,
@@ -41,6 +48,7 @@ export const asyncRoutes = [
     component: Layout,
     meta: {
       title: "房屋管理",
+      icon: "eye",
     },
     children: [
       {
@@ -49,6 +57,7 @@ export const asyncRoutes = [
         component: () => import("@/views/admin/thing"),
         meta: {
           title: "房屋管理",
+          icon: "el-icon-edit",
         },
       },
     ],
