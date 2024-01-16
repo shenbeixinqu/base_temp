@@ -1,6 +1,7 @@
-import { getRoleInfo, login } from "@/api/user.js";
-import { getToken, setToken } from "@/utils/token";
+import { getRoleInfo, login, logout } from "@/api/user.js";
+import { getToken, setToken, removeToken } from "@/utils/token";
 import { isArray, isString } from "lodash";
+import { resetRouter } from "@/router";
 
 const state = () => ({
   token: getToken(),
@@ -56,7 +57,14 @@ const actions = {
     console.log("token", token);
     commit("setToken", token);
   },
-
+  /**
+   * @description 退出
+   * @param {*} { dispatch }
+   */
+  async logout({ dispatch }) {
+    await logout();
+    await dispatch("resetAll");
+  },
   /**
    * @description 用户接口信息
    * @param {*} { commit dispatch state}
@@ -83,7 +91,20 @@ const actions = {
       if (ability) dispatch("acl/setAbility", ability, { root: true });
     }
   },
-
+  /**
+   * @description 重置token roles router tabsBar等
+   * @params {*} { commit, dispatch }
+   */
+  async resetAll({ commit, dispatch }) {
+    commit("setUsername", "游客");
+    commit(
+      "setAvatar",
+      "https://i.gtimg.cn/club/item/face/img/2/15922_100.gif"
+    );
+    await dispatch("setToken", "");
+    await resetRouter();
+    removeToken();
+  },
   setToken({ commit }, token) {
     commit("setToken", token);
   },

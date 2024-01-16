@@ -8,7 +8,9 @@
         </div>
       </el-col>
       <el-col :lg="12" :md="12" :sm="12" :xl="12" :xs="20">
-        <div class="right-panel">56789</div>
+        <div class="right-panel">
+          <uni-avatar />
+        </div>
       </el-col>
     </el-row>
   </div>

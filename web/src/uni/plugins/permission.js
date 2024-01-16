@@ -23,9 +23,9 @@ router.beforeEach(async (to, from, next) => {
     }
   } else {
     if (routesWhiteList.includes(to.path)) {
-      next()
+      next();
     } else {
-      next(toLoginRoute(to.path))
+      next(toLoginRoute(to.path));
     }
   }
 });
