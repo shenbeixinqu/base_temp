@@ -1,249 +1,134 @@
 <template>
-  <div ref="custom-table" class="custom-table-container">
+  <div class="user-management-container">
     <pgt-query-form>
       <pgt-query-form-left-panel>
-        <el-form
-          ref="form"
-          :inline="true"
-          :model="queryForm"
-          @submit.native.prevent
+        <el-button size="small" type="primary" @click="handleEdit"
+          >添加</el-button
         >
+        <el-button size="small" type="danger" @click="handleDelete"
+          >批量删除</el-button
+        >
+      </pgt-query-form-left-panel>
+      <pgt-query-form-right-panel>
+        <el-form :inline="true" :model="queryForm" @submit.native.prevent>
           <el-form-item>
             <el-input
-              v-model="queryForm.title"
+              v-model.trim="queryForm.username"
               size="small"
-              placeholder="标题"
+              clearable
+              placeholder="请输入用户名"
             />
           </el-form-item>
           <el-form-item>
-            <el-button
-              icon="el-icon-search"
-              type="primary"
-              size="small"
-              @click="handleQuery"
+            <el-button type="primary" size="small" @click="queryData"
               >查询</el-button
-            >
-            <el-button
-              icon="el-icon-plus"
-              type="primary"
-              size="small"
-              @click="handleAdd"
-              >添加</el-button
-            >
-            <el-button
-              icon="el-icon-delete"
-              type="danger"
-              size="small"
-              @click="handleDelete"
-              >删除</el-button
             >
           </el-form-item>
         </el-form>
-      </pgt-query-form-left-panel>
-      <pgt-query-form-right-panel>
-        <div class="stripe-panel">
-          <el-checkbox v-model="stripe">斑马纹</el-checkbox>
-        </div>
-        <div class="border-panel">
-          <el-checkbox v-model="border">边框(可拉伸列)</el-checkbox>
-        </div>
-        <el-popover
-          ref="popover"
-          popper-class="custom-table-checkbox"
-          width="200"
-          trigger="hover"
-        >
-          <el-radio-group v-model="lineHeight">
-            <el-radio label="medium">大</el-radio>
-            <el-radio label="small">中</el-radio>
-            <el-radio label="mini">小</el-radio>
-          </el-radio-group>
-          <el-button
-            icon="el-icon-s-operation"
-            style="margin: 0 10px 10px 0 !important"
-            type="primary"
-            size="small"
-            slot="reference"
-            >表格尺寸</el-button
-          >
-        </el-popover>
-        <el-popover popper-class="custom-table-checkbox" trigger="hover">
-          <el-checkbox-group v-model="checkList">
-            <pgt-draggable v-bind="dragOptions" :list="columns">
-              <div v-for="(item, index) in columns" :key="item + index">
-                <el-checkbox
-                  :disabled="item.disableCheck === true"
-                  :label="item.label"
-                >
-                  {{ item.label }}
-                </el-checkbox>
-              </div>
-            </pgt-draggable>
-          </el-checkbox-group>
-          <el-button
-            icon="el-icon-setting"
-            style="margin: 0 10px 10px 0 !important"
-            size="small"
-            type="primary"
-            slot="reference"
-          >
-            可拖拽列设置
-          </el-button>
-        </el-popover>
       </pgt-query-form-right-panel>
     </pgt-query-form>
     <el-table
-      ref="tableSort"
-      v-loading="listLoading"
-      :border="border"
-      :size="lineHeight"
-      :stripe="stripe"
+      :loading="listLoading"
       :data="list"
+      border
       @selection-change="setSelectRows"
     >
-      <el-table-column align="center" width="55" type="selection" />
-      <el-table-column align="center" label="序号" width="95">
+      <el-table-column width="50px" align="center" type="selection" />
+      <el-table-column label="序号" width="55px">
         <template #default="{ $index }">
           {{ $index + 1 }}
         </template>
       </el-table-column>
+      <el-table-column align="center" prop="id" label="id"></el-table-column>
       <el-table-column
-        v-for="(item, index) in finallyColumns"
-        :key="index"
         align="center"
-        :width="item.width"
-        :label="item.label"
-        :prop="item.prop"
-        :sortable="item.sortable"
-      >
+        prop="username"
+        label="用户名"
+      ></el-table-column>
+      <el-table-column
+        align="center"
+        prop="email"
+        label="邮箱"
+      ></el-table-column>
+      <el-table-column align="center" label="角色">
         <template #default="{ row }">
-          <span v-if="item.label === '评级'">
-            <el-rate v-model="row.rate" disabled />
-          </span>
-          <span v-else>
-            {{ row[item.prop] }}
+          <span v-for="(item, index) in row.roles" :key="index">
+            <el-tag type="success" style="margin-left: 5px">{{ item }}</el-tag>
           </span>
         </template>
       </el-table-column>
       <el-table-column
         align="center"
-        label="操作"
-        show-overflow-tooltip
-        width="100"
-      >
+        prop="datatime"
+        label="修改时间"
+      ></el-table-column>
+      <el-table-column align="center" label="操作" width="120px">
         <template #default="{ row }">
           <el-button type="text" @click="handleEdit(row)">编辑</el-button>
           <el-button type="text" @click="handleDelete(row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
+    <edit ref="edit" @fetch-data="fetchData"></edit>
     <el-pagination
-      background
       :current-page="queryForm.pageNo"
       :page-size="queryForm.pageSize"
       :layout="layout"
       :total="total"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-    />
-    <table-edit ref="edit" @fetch-data="fetchData" />
+    >
+    </el-pagination>
   </div>
 </template>
 
 <script>
-import { getList } from "@/api/table";
-import TableEdit from "./components/tableEdit";
-import PgtDraggable from "vuedraggable";
+import { getList } from "@/api/userManagement";
+import Edit from "./components/UserManagementEdit.vue";
+
 export default {
-  name: "CustomTable",
+  name: "UserManagement",
+  components: {
+    Edit,
+  },
   created() {
     this.fetchData();
   },
-  computed: {
-    dragOptions() {
-      return {
-        animation: 600,
-        group: "description",
-      };
-    },
-    finallyColumns() {
-      console.log(
-        "123",
-        this.columns.filter((item) => this.checkList.includes(item.label))
-      );
-      return this.columns.filter((item) => this.checkList.includes(item.label));
-    },
-    testColumn() {
-      return this.columns;
-    },
-  },
-  components: {
-    TableEdit,
-    PgtDraggable,
-  },
   data() {
     return {
-      listLoading: true,
-      border: true,
-      stripe: false,
-      lineHeight: "medium",
-      checkList: ["标题", "作者", "评级", "点击量", "时间"],
-      columns: [
-        {
-          label: "标题",
-          width: "auto",
-          prop: "title",
-          sortable: true,
-          disableCheck: true,
-        },
-        {
-          label: "作者",
-          width: "auto",
-          prop: "author",
-          sortable: true,
-        },
-        {
-          label: "评级",
-          width: "auto",
-          prop: "rate",
-          sortable: true,
-        },
-        {
-          label: "点击量",
-          width: "auto",
-          prop: "pageViews",
-          sortable: true,
-        },
-        {
-          label: "时间",
-          width: "auto",
-          prop: "datetime",
-          sortable: true,
-        },
-      ],
-      list: [],
+      listLoading: false,
       total: 0,
-      selectRows: [],
+      list: [],
+      selectRows: "",
       layout: "total, sizes, prev, pager, next, jumper",
       queryForm: {
-        pageNo: 1,
         pageSize: 10,
+        pageNo: 1,
       },
     };
   },
   methods: {
     setSelectRows(val) {
-      this.setSelectRows = val;
+      this.selectRows = val;
     },
-    handleAdd() {
-      this.$refs["edit"].showEdit();
+    handleSizeChange(val) {
+      this.queryForm.pageSize = val;
+      this.fetchData();
+    },
+    handleCurrentChange(val) {
+      this.queryForm.pageNo = val;
+      this.fetchData();
     },
     handleEdit(row) {
-      this.$refs["edit"].showEdit(row);
+      if (row) {
+        this.$refs.edit.showEdit(row);
+      } else {
+        this.$refs.edit.showEdit();
+      }
     },
     handleDelete(row) {
       if (row.id) {
-        this.$confirm("确定要删除当前项嘛?", "温馨提示", {
+        this.$confirm("确定要删除当前项吗?", "温馨提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning",
@@ -262,7 +147,7 @@ export default {
           });
       } else {
         if (this.selectRows.length > 0) {
-          this.$confirm("确定要删除选中项嘛?", "温馨提示", {
+          this.$confirm("确定要删除选中项吗", "温馨提示", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
             type: "warning",
@@ -282,39 +167,26 @@ export default {
         } else {
           this.$message({
             type: "error",
-            msg: "未选中任何行",
+            message: "未选中任何行",
           });
         }
       }
     },
-    handleSizeChange(val) {
-      this.queryForm.pageSize = val;
-      this.fetchData();
-    },
-    handleCurrentChange(val) {
-      this.queryForm.pageNo = val;
-      this.fetchData();
-    },
-    handleQuery() {
+    queryData() {
       this.queryForm.pageNo = 1;
       this.fetchData();
     },
     async fetchData() {
       this.listLoading = true;
       const {
-        data: { total, list },
+        data: { list, total },
       } = await getList(this.queryForm);
-      this.total = total;
       this.list = list;
+      this.total = total;
       this.listLoading = false;
     },
   },
 };
 </script>
 
-<style lang="scss" scoped>
-.stripe-panel,
-.border-panel {
-  margin: 0 10px $base-margin/2 10px !important;
-}
-</style>
+<style></style>

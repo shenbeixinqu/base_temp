@@ -1,83 +1,85 @@
 <template>
-  <!-- 纵向布局 -->
-  <div
-    class="pgt-layout-vertical"
-    :class="{
-      fixed: fixedHeader,
-      'no-tabs-bar': !showTabs,
-    }"
-  >
-    <pgt-side-bar />
-    <div
-      v-if="device === 'mobile' && !collapse"
-      class="v-modal"
-      @click="handleFoldSideBar"
-    />
-    <div
-      class="pgt-main"
-      :class="{
-        'is-collapse-main': collapse,
-      }"
-    >
-      <div
-        class="pgt-layout-header"
-        :class="{
-          'fixed-header': fixedHeader,
-        }"
-      >
-        <pgt-nav />
-        <pgt-tabs v-show="showTabs" />
+  <el-dropdown @command="handleCommand">
+    <span class="avatar-dropdown">
+      <el-avatar class="user-avatar" :src="avatar"></el-avatar>
+      <div class="user-name">
+        <span>{{ username }}</span>
+        <span
+          class="iconfont icon-xia"
+          style="font-size: 12px; margin-left: 4px"
+        ></span>
       </div>
-      <pgt-app-main />
-    </div>
-  </div>
+    </span>
+    <!-- <span>admin<i class="el-icon-arrow-down el-icon--right" /></span> -->
+    <el-dropdown-menu slot="dropdown">
+      <el-dropdown-item>
+        <span class="iconfont icon-geren"></span>
+        个人中心
+      </el-dropdown-item>
+      <el-dropdown-item command="logout">
+        <span class="iconfont icon-tuichu"></span>
+        退出登录
+      </el-dropdown-item>
+    </el-dropdown-menu>
+  </el-dropdown>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+import { toLoginRoute } from "@/utils/routes";
 
 export default {
-  name: "PgtLayoutVertical",
-  props: {
-    collapse: {
-      type: Boolean,
-      default() {
-        return false;
-      },
-    },
-    fixedHeader: {
-      type: Boolean,
-      default() {
-        return true;
-      },
-    },
-    showTabs: {
-      type: Boolean,
-      default() {
-        return true;
-      },
-    },
-    device: {
-      type: String,
-      default() {
-        return "desktop";
-      },
-    },
+  name: "PgtAvatar",
+  computed: {
+    ...mapGetters({
+      avatar: "user/avatar",
+      username: "user/username",
+    }),
   },
-  beforeMount() {},
   methods: {
     ...mapActions({
-      handleFoldSideBar: "settings/foldSideBar",
+      _logout: "user/logout",
     }),
+    handleCommand(command) {
+      switch (command) {
+        case "logout":
+          this.logout();
+          break;
+      }
+    },
+    async logout() {
+      await this._logout();
+      console.log("9999");
+      console.log(toLoginRoute(this.$route.path));
+      await this.$router.push(toLoginRoute(this.$route.path));
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.pgt-layout-vertical {
-  .fixed-header {
-    left: $base-left-menu-width;
-    width: $base-right-content-width;
+.avatar-dropdown {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    margin-left: 15px;
+    cursor: pointer;
+  }
+  .user-name {
+    position: relative;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 40px;
+    margin-left: 6px;
+    line-height: 40px;
+    cursor: pointer;
   }
 }
 </style>
